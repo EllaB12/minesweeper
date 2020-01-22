@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mine Sweeper</title>
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body onload="initGame()" oncontextmenu="return false;">
+    <div class="mood-container" onclick="initGame()"></div>
+    <div class="seconds-counter">0</div>
+    <div class="game-container"></div>
+    <div>
+        <span class="hint1" onclick="getHint(this)">💡</span>
+        <span class="hint2" onclick="getHint(this)">💡</span>
+        <span class="hint3" onclick="getHint(this)">💡</span>
+    </div>
+    <button>Beginner</button>
+    <button>Medium</button>
+    <button>Expert</button>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
