@@ -7,20 +7,29 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mine Sweeper</title>
     <link rel="stylesheet" href="css/main.css" />
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Niramit&display=swap" rel="stylesheet">
 </head>
 
-<body onload="initGame()" oncontextmenu="return false;">
-    <div class="mood-container" onclick="initGame()"></div>
-    <div class="seconds-counter">0</div>
+<body onload="initGame(4)" oncontextmenu="return false;">
+    <div class="mood-container" onclick="restartGame(4)"></div>
+    <div class="lives">You have left <span class="lives-conter">3</span> lives</div>
+    <div class="seconds-counter"></div>
+    <div class="bestTime-container"></div>
     <div class="game-container"></div>
-    <div>
-        <span class="hint1" onclick="getHint(this)">💡</span>
-        <span class="hint2" onclick="getHint(this)">💡</span>
-        <span class="hint3" onclick="getHint(this)">💡</span>
+    <p class="hints">Need a <span class="rotate hint-inside">HINT</span>?</p>
+    <div class="hint-container">
+        <span class="hint hint1" onclick="getHint(this)">💡</span>
+        <span class="hint hint2" onclick="getHint(this)">💡</span>
+        <span class="hint hint3" onclick="getHint(this)">💡</span>
     </div>
-    <button>Beginner</button>
-    <button>Medium</button>
-    <button>Expert</button>
+    <button class="safe-click" onclick="markSafeCell()">Safe Click</button>
+    <p class="clicks"><span>3</span> Clicks avilable</p>
+    <div class="buttons">
+        <button class="button1" onclick="initGame(4)">Beginner</button>
+        <button class="button2" onclick="initGame(8)">Medium</button>
+        <button class="button3" onclick="initGame(12)">Expert</button>
+    </div>
+
     <script src="js/main.js"></script>
 </body>
 
