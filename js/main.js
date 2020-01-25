@@ -197,13 +197,20 @@ function cellClicked(elCell, i, j) {
     }
 
     if (!cell.isShown && !cell.isMarked && !gHint && gGame.isOn) {
-        if (cell.isMine) elCell.innerText = MINE;
-        else if (cell.minesAroundCount === 0) expandShown(gBoard, elCell, i, j);
-        else elCell.innerText = cell.minesAroundCount;
+        if (cell.isMine) {
+            elCell.innerText = MINE;
+            elCell.classList.add('mark-cell');
+            cell.isShown = true;
+            gGame.shownCount++;
+        }
+        else if (cell.minesAroundCount === 0) fullExpand(elCell, i, j);
+        else {
+            elCell.innerText = cell.minesAroundCount;
+            elCell.classList.add('mark-cell');
+            cell.isShown = true;
+            gGame.shownCount++;
+        }
 
-        elCell.classList.add('mark-cell');
-        cell.isShown = true;
-        gGame.shownCount++;
         console.log(gGame.shownCount);
         checkGameOver(cell);
     }
@@ -399,39 +406,46 @@ function markSafeCell() {
     }
 }
 
-//NOTE: The recursion works but the count is not good so there is no victory. I'll fix it on Saturday
-// function fullExpand(elCell, i, j) {
-//     if (gBoard[i][j].minesAroundCount !== 0 || gBoard[i][j].isShown) return;
 
-//     elCell.innerText = gBoard[i][j].minesAroundCount;
-//     gBoard[i][j].isShown = true;
+function fullExpand(elCell, i, j) {
 
-//     if (gBoard[i][j].minesAroundCount === 0) {
+    if (gBoard[i][j].minesAroundCount !== 0 || gBoard[i][j].isShown) {
+        return;
+    }
 
-//         for (var row = i - 1; row <= i + 1; row++) {
-//             if (row < 0 || row >= gBoard.length) continue;
+    elCell.innerText = gBoard[i][j].minesAroundCount;
+    gBoard[i][j].isShown = true;
+    gGame.shownCount++;
 
-//             for (var col = j - 1; col <= j + 1; col++) {
-//                 if (col < 0 || col >= gBoard.length) continue;
-//                 if (row === i && col === j) continue;
+    if (gBoard[i][j].minesAroundCount === 0) {
 
-//                 var elCellCurr = document.querySelector(`.cell${row}-${col}`);
+        for (var row = i - 1; row <= i + 1; row++) {
+            if (row < 0 || row >= gBoard.length) continue;
 
-//                 fullExpand(elCellCurr, row, col);
+            for (var col = j - 1; col <= j + 1; col++) {
+                if (col < 0 || col >= gBoard.length) continue;
 
-//                 var cell = gBoard[row][col];
-//                 if (!cell.isShown) gGame.shownCount++;
-//                 console.log(gGame.shownCount);
-//                 cell.isShown = true;
+                var elCellCurr = document.querySelector(`.cell${row}-${col}`);
 
-//                 if (!cell.isMarked) {
-//                     elCellCurr.innerText = cell.minesAroundCount;
-//                     elCellCurr.classList.add('mark-cell');
-//                 }
-//             }
-//         }
-//     } else return false;
-// }
+                fullExpand(elCellCurr, row, col);
+
+                var cell = gBoard[row][col];
+                if (!cell.isShown) {
+                    gGame.shownCount++;
+                    elCell.classList.add('mark-cell');
+                    cell.isShown = true;
+                }
+
+                if (!cell.isMarked) {
+                    elCellCurr.innerText = cell.minesAroundCount;
+                    elCellCurr.classList.add('mark-cell');
+                }
+
+                console.log(gGame.shownCount);
+            }
+        }
+    } else return;
+}
 
 
 
